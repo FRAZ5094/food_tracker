@@ -7,10 +7,11 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
-import { db } from "@/db";
+import { db, expoDb } from "@/db";
 import migrations from "@/drizzle/migrations";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { Text, View } from "react-native";
 
 export const unstable_settings = {
@@ -20,6 +21,7 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const { success, error } = useMigrations(db, migrations);
+  useDrizzleStudio(expoDb);
   if (error) {
     return (
       <View>
