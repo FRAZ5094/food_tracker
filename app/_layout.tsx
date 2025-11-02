@@ -20,8 +20,8 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const { success, error } = useMigrations(db, migrations);
   useDrizzleStudio(expoDb);
+  const { success, error } = useMigrations(db, migrations);
   if (error) {
     return (
       <View>
@@ -42,8 +42,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
+          name="(modals)"
+          options={{ presentation: "formSheet", headerShown: false }}
         />
       </Stack>
       <StatusBar style="auto" />

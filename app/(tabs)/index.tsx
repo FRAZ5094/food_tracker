@@ -1,17 +1,14 @@
 import { Image } from "expo-image";
-import { Button, Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
+import { CreateFoodButton } from "@/components/CreateFoodButton";
 import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { db } from "@/db";
-import * as schema from "@/db/schema";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link } from "expo-router";
 
 export default function HomeScreen() {
-  const { data: users } = useLiveQuery(db.query.users.findMany());
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -24,24 +21,8 @@ export default function HomeScreen() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
-        <Button
-          title="Add User"
-          onPress={async () => {
-            const newUser = await db
-              .insert(schema.users)
-              .values({ id: users.length + 1 })
-              .returning();
-            console.log(newUser);
-          }}
-        />
-        <ThemedView
-          style={{ flexDirection: "column", gap: 8, flexWrap: "wrap", flex: 1 }}
-        >
-          {users.map((user, index) => (
-            <ThemedText key={index}>{user.id}</ThemedText>
-          ))}
-        </ThemedView>
         <HelloWave />
+        <CreateFoodButton />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
