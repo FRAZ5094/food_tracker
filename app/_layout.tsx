@@ -13,6 +13,7 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { Text, View } from "react-native";
+import "./global.css";
 
 export const unstable_settings = {
   anchor: "(tabs)",
