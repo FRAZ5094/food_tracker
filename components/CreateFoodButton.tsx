@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 
 export function CreateFoodButton() {
   return (
-    <Link href="/(modals)/CreateFoodModal" style={{ color: "white" }}>
+    <Link href="/(modals)/CreateFoodModal" style={{ color: "black" }}>
       Create food
     </Link>
   );
