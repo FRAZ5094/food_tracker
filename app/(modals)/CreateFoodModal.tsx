@@ -1,11 +1,12 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { FormInput } from "@/components/form/FormInput";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
 import { db } from "@/db";
 import { CreateFoodSchema, Food } from "@/db/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
-import { Controller, useForm } from "react-hook-form";
-import { Button, StyleSheet, TextInput } from "react-native";
+import { useForm } from "react-hook-form";
+import { View } from "react-native";
 
 export default function CreateFoodModal() {
   const canGoBack = router.canGoBack();
@@ -27,59 +28,68 @@ export default function CreateFoodModal() {
   console.log(errors.name);
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title">This is a modal</ThemedText>
-      <Controller
+    <View
+      style={{
+        padding: 16,
+        marginTop: 36,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 24,
+          fontWeight: "500",
+        }}
+      >
+        Add a new food
+      </Text>
+      <FormInput control={control} name="name" label={"Name"} />
+      <FormInput
         control={control}
-        rules={{
-          required: true,
-        }}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
-          <>
-            <TextInput
-              placeholder="Name"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-            {error && <ThemedText>{error.message}</ThemedText>}
-          </>
-        )}
-        name="name"
+        name="servingSizeValue"
+        label="Serving size"
       />
-      <Button
-        title="Save"
-        onPress={() => {
-          console.log("onSubmit");
-          onSubmit();
-        }}
+      <FormInput
+        control={control}
+        name="servingSizeUnit"
+        label="Serving units"
       />
-      <Button
-        title="Cancel"
-        onPress={() => {
-          if (canGoBack) {
-            router.back();
-          } else {
-            router.dismissAll();
-          }
+      <FormInput control={control} name="protein" label="Protein (g)" />
+      <FormInput control={control} name="carbs" label="Carbs (g)" />
+      <FormInput control={control} name="fat" label="Fat (g)" />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          gap: 4,
         }}
-      />
-    </ThemedView>
+      >
+        <Button
+          style={{
+            flex: 1,
+          }}
+          variant={"secondary"}
+          onPress={() => {
+            if (canGoBack) {
+              router.back();
+            } else {
+              router.dismissAll();
+            }
+          }}
+        >
+          <Text>Cancel</Text>
+        </Button>
+        <Button
+          style={{
+            flex: 1,
+          }}
+          onPress={() => {
+            console.log("onSubmit");
+            onSubmit();
+          }}
+        >
+          <Text>Save</Text>
+        </Button>
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});
