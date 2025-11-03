@@ -10,8 +10,10 @@ import "react-native-reanimated";
 import { db, expoDb } from "@/db";
 import migrations from "@/drizzle/migrations";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { PortalHost } from "@rn-primitives/portal";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import React from "react";
 import { Text, View } from "react-native";
 import "./global.css";
 
@@ -48,6 +50,7 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="auto" />
+      <PortalHost />
     </ThemeProvider>
   );
 }
