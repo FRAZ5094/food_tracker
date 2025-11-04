@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { AddLoggedFoodButton } from "../loggedFood/AddLoggedFoodButton";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
+import { DeleteLoggedFoodButton } from "../loggedFood/DeleteLoggedFoodButton";
 
 type LoggedFood = {
   id: number;
@@ -24,9 +25,6 @@ export function MealCard({
   loggedFoods: LoggedFood[];
   day: string;
 }) {
-  const handleDeleteLoggedFood = async (loggedFoodId: number) => {
-    await db.delete(LoggedFood).where(eq(LoggedFood.id, loggedFoodId));
-  };
   return (
     <View className="flex flex-col border border-gray-200 rounded-md p-2">
       <View className="flex flex-row items-center justify-between">
@@ -42,13 +40,7 @@ export function MealCard({
             <Text>{loggedFood.name}</Text>
             <Text>{macrosToCalories(loggedFood)} kcal</Text>
           </View>
-          <Button
-            variant="ghost"
-            size="icon"
-            onPress={() => handleDeleteLoggedFood(loggedFood.id)}
-          >
-            <MaterialCommunityIcons name="delete" size={24} color="black" />
-          </Button>
+          <DeleteLoggedFoodButton loggedFoodId={loggedFood.id} />
         </View>
       ))}
     </View>
