@@ -28,13 +28,6 @@ export const LoggedFood = sqliteTable("logged_food", {
   fat: real("fat").notNull(),
   servingSizeValue: real("serving_size_value").notNull(),
   servingSizeUnit: text("serving_size_unit").notNull(),
-  mealId: integer("meal_id")
-    .references(() => Meal.id)
-    .notNull(),
-});
-
-export const Meal = sqliteTable("meal", {
-  id: integer().primaryKey().notNull(),
-  mealName: text("meal_name").notNull().unique(),
-  mealOrder: integer("meal_order").notNull(),
+  mealName: text("meal_name").notNull(),
+  day: text("day").notNull(),
 });

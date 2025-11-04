@@ -10,12 +10,14 @@ export function FormInput<T extends FieldValues>({
   placeholder = "",
   label,
   type = "text",
+  disabled = false,
 }: {
   control: Control<T, any, any>;
   name: Path<T>;
   placeholder?: string;
   label: string;
   type?: "text" | "number";
+  disabled?: boolean;
 }) {
   return (
     <Controller
@@ -35,6 +37,8 @@ export function FormInput<T extends FieldValues>({
             <Input
               placeholder={placeholder}
               onBlur={onBlur}
+              editable={!disabled}
+              selectTextOnFocus={!disabled}
               onChangeText={(text) => {
                 if (type === "number") {
                   onChange(Number(text));

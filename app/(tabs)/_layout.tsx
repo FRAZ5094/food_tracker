@@ -2,9 +2,9 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -22,11 +22,7 @@ export default function TabLayout() {
         options={{
           title: "Diary",
           tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name="calendar.day.timeline.leading"
-              color={color}
-            />
+            <MaterialCommunityIcons name="book" size={28} color={color} />
           ),
         }}
       />
@@ -35,7 +31,11 @@ export default function TabLayout() {
         options={{
           title: "Foods",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="fork.knife" color={color} />
+            <MaterialCommunityIcons
+              name="silverware-fork-knife"
+              size={28}
+              color={color}
+            />
           ),
         }}
       />

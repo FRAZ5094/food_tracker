@@ -1,0 +1,1 @@
+ALTER TABLE `logged_food` RENAME COLUMN "date" TO "day";

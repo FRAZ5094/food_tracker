@@ -1,0 +1,1 @@
+ALTER TABLE `logged_food` ADD `date` text NOT NULL;

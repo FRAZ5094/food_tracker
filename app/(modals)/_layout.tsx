@@ -10,6 +10,13 @@ export default function ModalsLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="AddLoggedFoodModal"
+        options={{
+          presentation: "formSheet",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
