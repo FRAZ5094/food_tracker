@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { Platform, StyleSheet, Text, View } from "react-native";
 
-import { CreateFoodButton } from "@/components/CreateFoodButton";
+import { CreateFoodButton } from "@/components/food/CreateFoodButton";
 import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";

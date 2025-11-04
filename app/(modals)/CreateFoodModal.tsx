@@ -10,19 +10,15 @@ import { View } from "react-native";
 
 export default function CreateFoodModal() {
   const canGoBack = router.canGoBack();
-  const {
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: zodResolver(CreateFoodSchema),
     reValidateMode: "onChange",
   });
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
-    const res = await db.insert(Food).values(data).returning();
-    console.log(res);
+    await db.insert(Food).values(data);
+    router.dismissAll();
   });
 
   return (
