@@ -25,8 +25,6 @@ export default function CreateFoodModal() {
     console.log(res);
   });
 
-  console.log(errors.name);
-
   return (
     <View
       style={{
@@ -47,15 +45,26 @@ export default function CreateFoodModal() {
         control={control}
         name="servingSizeValue"
         label="Serving size"
+        type="number"
       />
       <FormInput
         control={control}
         name="servingSizeUnit"
         label="Serving units"
       />
-      <FormInput control={control} name="protein" label="Protein (g)" />
-      <FormInput control={control} name="carbs" label="Carbs (g)" />
-      <FormInput control={control} name="fat" label="Fat (g)" />
+      <FormInput
+        control={control}
+        name="protein"
+        label="Protein (g)"
+        type="number"
+      />
+      <FormInput
+        control={control}
+        name="carbs"
+        label="Carbs (g)"
+        type="number"
+      />
+      <FormInput control={control} name="fat" label="Fat (g)" type="number" />
       <View
         style={{
           flex: 1,

@@ -22,12 +22,12 @@ export const CreateFoodSchema = createInsertSchema(Food, {
 
 export const LoggedFood = sqliteTable("logged_food", {
   id: integer().primaryKey().notNull(),
-  loggedName: text("logged_name").notNull(),
-  loggedProtein: real("logged_protein").notNull(),
-  loggedCarbs: real("logged_carbs").notNull(),
-  loggedFat: real("logged_fat").notNull(),
-  loggedServingSizeValue: real("logged_serving_size_value").notNull(),
-  loggedServingSizeUnit: text("logged_serving_size_unit").notNull(),
+  name: text("name").notNull(),
+  protein: real("protein").notNull(),
+  carbs: real("carbs").notNull(),
+  fat: real("fat").notNull(),
+  servingSizeValue: real("serving_size_value").notNull(),
+  servingSizeUnit: text("serving_size_unit").notNull(),
   mealId: integer("meal_id")
     .references(() => Meal.id)
     .notNull(),

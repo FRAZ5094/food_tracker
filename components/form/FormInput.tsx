@@ -9,11 +9,13 @@ export function FormInput<T extends FieldValues>({
   name,
   placeholder = "",
   label,
+  type = "text",
 }: {
   control: Control<T, any, any>;
   name: Path<T>;
   placeholder?: string;
   label: string;
+  type?: "text" | "number";
 }) {
   return (
     <Controller
@@ -27,12 +29,21 @@ export function FormInput<T extends FieldValues>({
       }) => (
         <>
           <View className="gap-2">
-            <Label htmlFor={name}>{label}</Label>
+            <Label tabIndex={-1} htmlFor={name}>
+              {label}
+            </Label>
             <Input
               placeholder={placeholder}
               onBlur={onBlur}
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                if (type === "number") {
+                  onChange(Number(text));
+                } else {
+                  onChange(text);
+                }
+              }}
               value={value}
+              keyboardType={type === "number" ? "decimal-pad" : "default"}
             />
           </View>
           <Text
