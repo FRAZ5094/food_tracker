@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,7 +20,25 @@ export type AddLoggedFoodModalParams = {
 };
 
 const LoggedFoodFormSchema = z.object({
-  servingSizeValue: z.number().gt(0),
+  servingSizeValue: z.preprocess(
+    (val) => {
+      // This handles all cases:
+      // - `val` is "1.5" -> `Number("1.5")` -> 1.5
+      // - `val` is "1."  -> `Number("1.")`  -> 1
+      // - `val` is "."   -> `Number(".")`   -> NaN (will fail validation)
+      // - `val` is ""    -> undefined
+      // - `val` is undefined -> undefined
+      // - `val` is 10 (from setValue/reset) -> 10
+      if (typeof val === "number") return val;
+      return val === "" || val === undefined ? undefined : Number(val);
+    },
+    // Add custom error messages for better UX
+    z
+      .number({
+        error: "Must be a valid number",
+      })
+      .gt(0, "Amount must be greater than 0")
+  ),
 });
 
 export default function AddLoggedFoodModal() {
@@ -35,16 +54,23 @@ export default function AddLoggedFoodModal() {
 
   const servingUnit = data?.servingSizeUnit;
   const selectedFoodName = data?.name;
+  const servingSizeValue = data?.servingSizeValue;
+
+  useEffect(() => {
+    if (servingSizeValue) {
+      setValue("servingSizeValue", servingSizeValue.toString());
+    }
+  }, [servingSizeValue]);
 
   const safeAreaInsets = useSafeAreaInsets();
   const canGoBack = router.canGoBack();
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, setValue } = useForm({
     resolver: zodResolver(LoggedFoodFormSchema),
+    shouldUnregister: false,
     reValidateMode: "onChange",
   });
 
   const onSubmit = handleSubmit(async (formData) => {
-    console.log(formData);
     if (!selectedFoodName || !servingUnit) {
       return;
     }
@@ -92,7 +118,7 @@ export default function AddLoggedFoodModal() {
         control={control}
         name="servingSizeValue"
         label={`Amount ${servingUnit ? `(${servingUnit})` : ""}`}
-        type="number"
+        keyboardType="decimal-pad"
         disabled={!params.foodId}
       />
       <View

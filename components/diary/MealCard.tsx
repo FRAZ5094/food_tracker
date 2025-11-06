@@ -1,7 +1,7 @@
-import { LoggedFood } from "@/db/schema";
 import { macrosToCalories } from "@/lib/utils";
 import { StyleSheet, View } from "react-native";
 import { AddLoggedFoodButton } from "../loggedFood/AddLoggedFoodButton";
+import { DeleteLoggedFoodButton } from "../loggedFood/DeleteLoggedFoodButton";
 import { Text } from "../ui/text";
 
 type LoggedFood = {
@@ -50,6 +50,7 @@ export function MealCard({
                     {loggedFood.servingSizeValue} {loggedFood.servingSizeUnit}
                   </Text>
                 </View>
+                <DeleteLoggedFoodButton loggedFoodId={loggedFood.id} />
                 <View className="flex flex-col gap-1 items-end">
                   <View className="flex flex-row gap-1">
                     <Text className="text-sm">P: {loggedFood.protein}g</Text>

@@ -1,5 +1,5 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { View } from "react-native";
+import { KeyboardType, View } from "react-native";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Text } from "../ui/text";
@@ -9,14 +9,14 @@ export function FormInput<T extends FieldValues>({
   name,
   placeholder = "",
   label,
-  type = "text",
+  keyboardType = "default",
   disabled = false,
 }: {
   control: Control<T, any, any>;
   name: Path<T>;
   placeholder?: string;
   label: string;
-  type?: "text" | "number";
+  keyboardType?: KeyboardType;
   disabled?: boolean;
 }) {
   return (
@@ -39,15 +39,9 @@ export function FormInput<T extends FieldValues>({
               onBlur={onBlur}
               editable={!disabled}
               selectTextOnFocus={!disabled}
-              onChangeText={(text) => {
-                if (type === "number") {
-                  onChange(Number(text));
-                } else {
-                  onChange(text);
-                }
-              }}
+              onChangeText={onChange}
               value={value}
-              keyboardType={type === "number" ? "decimal-pad" : "default"}
+              keyboardType={keyboardType}
             />
           </View>
           <Text
