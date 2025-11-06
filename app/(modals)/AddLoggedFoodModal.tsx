@@ -91,7 +91,7 @@ export default function AddLoggedFoodModal() {
       <FormInput
         control={control}
         name="servingSizeValue"
-        label={`Amount (${servingUnit})`}
+        label={`Amount ${servingUnit ? `(${servingUnit})` : ""}`}
         type="number"
         disabled={!params.foodId}
       />

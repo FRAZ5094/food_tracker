@@ -31,7 +31,7 @@ export function FormInput<T extends FieldValues>({
       }) => (
         <>
           <View className="gap-2">
-            <Label tabIndex={-1} htmlFor={name}>
+            <Label disabled={disabled} tabIndex={-1} htmlFor={name}>
               {label}
             </Label>
             <Input
