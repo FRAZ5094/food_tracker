@@ -60,7 +60,6 @@ export function MealCard({
                     {macrosToCalories(loggedFood)} kcal
                   </Text>
                 </View>
-                {/* <DeleteLoggedFoodButton loggedFoodId={loggedFood.id} /> */}
               </View>
             ))}
           </View>
@@ -69,3 +68,16 @@ export function MealCard({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  rightAction: { width: 50, height: 50, backgroundColor: "red" },
+  separator: {
+    width: "100%",
+    borderTopWidth: 1,
+  },
+  swipeable: {
+    height: 50,
+    backgroundColor: "papayawhip",
+    alignItems: "center",
+  },
+});

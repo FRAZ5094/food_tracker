@@ -15,6 +15,7 @@ import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import React from "react";
 import { Text, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "./global.css";
 
 export const unstable_settings = {
@@ -42,15 +43,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(modals)"
-          options={{ presentation: "formSheet", headerShown: false }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-      <PortalHost />
+      <GestureHandlerRootView>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(modals)"
+            options={{ presentation: "formSheet", headerShown: false }}
+          />
+        </Stack>
+        <StatusBar style="auto" />
+        <PortalHost />
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }
