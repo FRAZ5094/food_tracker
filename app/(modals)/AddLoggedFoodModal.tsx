@@ -121,10 +121,7 @@ export default function AddLoggedFoodModal() {
           style={{
             flex: 1,
           }}
-          onPress={() => {
-            console.log("onSubmit");
-            onSubmit();
-          }}
+          onPress={onSubmit}
         >
           <Text>Add</Text>
         </Button>

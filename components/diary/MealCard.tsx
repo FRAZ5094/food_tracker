@@ -1,13 +1,8 @@
-import { db } from "@/db";
 import { LoggedFood } from "@/db/schema";
 import { macrosToCalories } from "@/lib/utils";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { eq } from "drizzle-orm";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AddLoggedFoodButton } from "../loggedFood/AddLoggedFoodButton";
-import { Button } from "../ui/button";
 import { Text } from "../ui/text";
-import { DeleteLoggedFoodButton } from "../loggedFood/DeleteLoggedFoodButton";
 
 type LoggedFood = {
   id: number;
@@ -15,6 +10,8 @@ type LoggedFood = {
   protein: number;
   carbs: number;
   fat: number;
+  servingSizeValue: number;
+  servingSizeUnit: string;
 };
 export function MealCard({
   mealName,
@@ -26,23 +23,49 @@ export function MealCard({
   day: string;
 }) {
   return (
-    <View className="flex flex-col border border-gray-200 rounded-md p-2">
-      <View className="flex flex-row items-center justify-between">
-        <Text>{mealName}</Text>
+    <View className="flex flex-col border border-gray-200 rounded-md bg-white">
+      <View className="flex flex-row justify-between px-2 py-1">
+        <Text className="text-lg font-medium">{mealName}</Text>
         <AddLoggedFoodButton day={day} mealName={mealName} />
       </View>
-      {loggedFoods.map((loggedFood) => (
-        <View
-          key={loggedFood.id}
-          className="flex flex-row items-center justify-between"
-        >
-          <View className="flex-1">
-            <Text>{loggedFood.name}</Text>
-            <Text>{macrosToCalories(loggedFood)} kcal</Text>
+      {loggedFoods.length > 0 && (
+        <>
+          <View
+            style={{
+              borderBottomColor: "gray",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
+          <View className="flex flex-col gap-2 p-2">
+            {loggedFoods.map((loggedFood) => (
+              <View
+                key={loggedFood.id}
+                className="flex flex-row items-center justify-between"
+              >
+                <View className="flex-1">
+                  <Text className="text-base font-medium">
+                    {loggedFood.name}
+                  </Text>
+                  <Text className="text-xs text-gray-500">
+                    {loggedFood.servingSizeValue} {loggedFood.servingSizeUnit}
+                  </Text>
+                </View>
+                <View className="flex flex-col gap-1 items-end">
+                  <View className="flex flex-row gap-1">
+                    <Text className="text-sm">P: {loggedFood.protein}g</Text>
+                    <Text className="text-sm">C: {loggedFood.carbs}g</Text>
+                    <Text className="text-sm">F: {loggedFood.fat}g</Text>
+                  </View>
+                  <Text className="text-xs text-gray-500">
+                    {macrosToCalories(loggedFood)} kcal
+                  </Text>
+                </View>
+                {/* <DeleteLoggedFoodButton loggedFoodId={loggedFood.id} /> */}
+              </View>
+            ))}
           </View>
-          <DeleteLoggedFoodButton loggedFoodId={loggedFood.id} />
-        </View>
-      ))}
+        </>
+      )}
     </View>
   );
 }

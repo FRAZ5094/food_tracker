@@ -13,7 +13,7 @@ export function AddLoggedFoodButton({
   const searchParams = new URLSearchParams(params);
   return (
     <Link
-      className="flex-col items-center justify-center p-2"
+      className="flex-col items-center justify-center"
       href={`/(modals)/AddLoggedFoodModal?${searchParams.toString()}`}
     >
       <MaterialCommunityIcons name="plus" size={24} color="black" />

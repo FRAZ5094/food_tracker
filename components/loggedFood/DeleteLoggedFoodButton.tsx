@@ -27,7 +27,7 @@ export function DeleteLoggedFoodButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" className="p-0" size="icon">
           <MaterialCommunityIcons name="delete" size={24} color="black" />
         </Button>
       </AlertDialogTrigger>
