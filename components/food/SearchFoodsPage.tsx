@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useState } from "react";
 import { View } from "react-native";
+import { OpenScanFoodModalButton } from "./OpenScanFoodModalButton";
 
 export default function SearchFoodsPage({
   onFoodSelected,
@@ -23,11 +24,15 @@ export default function SearchFoodsPage({
   );
   return (
     <View className="p-4 flex flex-col gap-4">
-      <Input
-        placeholder="Search foods"
-        value={search}
-        onChangeText={setSearch}
-      />
+      <View className="flex flex-row gap-2 items-center">
+        <Input
+          className="flex-1"
+          placeholder="Search foods"
+          value={search}
+          onChangeText={setSearch}
+        />
+        <OpenScanFoodModalButton />
+      </View>
       {filteredFoods?.map((food) => (
         <FoodCard
           key={food.id}
