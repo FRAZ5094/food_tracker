@@ -11,7 +11,12 @@ export function MacrosBreakdownChart({
 }: {
   macros: { protein: number; carbs: number; fat: number };
 }) {
-  const renderLegend = (text: string, value: number, color: string) => {
+  const renderLegend = (
+    text: string,
+    absoluteValue: number,
+    percentageValue: number,
+    color: string
+  ) => {
     return (
       <View className="flex flex-row items-center gap-1 mr-2">
         <View
@@ -23,7 +28,8 @@ export function MacrosBreakdownChart({
           }}
         />
         <Text style={{ color: "black", fontSize: 12 }}>
-          {text || ""}: {value.toFixed(0)}%
+          {text || ""}: {absoluteValue.toFixed(0)}g (
+          {percentageValue.toFixed(0)}%)
         </Text>
       </View>
     );
@@ -42,9 +48,9 @@ export function MacrosBreakdownChart({
     <View>
       <View className="flex flex-row items-center  gap-4">
         <View className="flex flex-col items-start">
-          {renderLegend("Protein", proteinPercentage, PROTEIN_COLOR)}
-          {renderLegend("Carbs", carbsPercentage, CARBS_COLOR)}
-          {renderLegend("Fat", fatPercentage, FAT_COLOR)}
+          {renderLegend("P", macros.protein, proteinPercentage, PROTEIN_COLOR)}
+          {renderLegend("C", macros.carbs, carbsPercentage, CARBS_COLOR)}
+          {renderLegend("F", macros.fat, fatPercentage, FAT_COLOR)}
         </View>
         <PieChart
           radius={radius}

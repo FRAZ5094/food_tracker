@@ -1,9 +1,10 @@
 import { FoodCard } from "@/components/food/FoodCard";
-import { Input } from "@/components/ui/input";
 import { db } from "@/db";
+import { FlashList } from "@shopify/flash-list";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { View } from "react-native";
+import { Input } from "../ui/input";
 import { OpenScanFoodModalButton } from "./OpenScanFoodModalButton";
 
 export default function SearchFoodsPage({
@@ -11,19 +12,32 @@ export default function SearchFoodsPage({
 }: {
   onFoodSelected?: (foodId: number) => void;
 }) {
-  const {
-    data: foods,
-    error,
-    updatedAt,
-  } = useLiveQuery(db.query.Food.findMany());
+  const { data: foods } = useLiveQuery(db.query.Food.findMany());
   const [search, setSearch] = useState("");
 
-  const filteredFoods = foods?.filter((food) =>
-    food.name.toLowerCase().includes(search.toLowerCase())
+  const testFoods = useMemo(
+    () =>
+      Array.from({ length: 100 }, (_, index) => ({
+        id: index,
+        name: `Food ${index + 1}`,
+        protein: Math.random() * 100,
+        carbs: Math.random() * 100,
+        fat: Math.random() * 100,
+      })),
+    []
   );
-  return (
-    <View className="p-4 flex flex-col gap-4">
-      <View className="flex flex-row gap-2 items-center">
+
+  const filteredFoods = useMemo(
+    () =>
+      testFoods?.filter((food) =>
+        food.name.toLowerCase().includes(search.toLowerCase())
+      ),
+    [search, testFoods]
+  );
+
+  const listHeader = useMemo(
+    () => (
+      <View className="flex flex-row items-center mb-4">
         <Input
           className="flex-1"
           placeholder="Search foods"
@@ -32,14 +46,24 @@ export default function SearchFoodsPage({
         />
         <OpenScanFoodModalButton />
       </View>
-      {filteredFoods?.map((food) => (
+    ),
+    [search]
+  );
+
+  return (
+    <FlashList
+      data={filteredFoods}
+      ListHeaderComponent={listHeader}
+      contentContainerClassName="p-4"
+      ItemSeparatorComponent={() => <View className="h-2" />}
+      renderItem={({ item }) => (
         <FoodCard
-          key={food.id}
-          food={food}
-          onPress={() => onFoodSelected?.(food.id)}
+          key={item.id}
+          food={item}
+          onPress={() => onFoodSelected?.(item.id)}
         />
-      ))}
-      {/* <CreateFoodButton /> */}
-    </View>
+      )}
+    />
+    // </View>
   );
 }
