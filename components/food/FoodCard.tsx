@@ -18,10 +18,13 @@ export function FoodCard({
   onPress?: () => void;
 }) {
   const calories = macrosToCalories(food);
+
+  const handlePress = () => onPress?.();
+
   return (
     <Pressable
       className="flex flex-row p-4 border gap-2 border-gray-200 rounded-md bg-white"
-      onPress={onPress}
+      onPress={handlePress}
     >
       <View className="flex-1">
         <Text className="text-lg font-medium text-start">{food.name}</Text>

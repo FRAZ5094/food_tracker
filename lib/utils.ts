@@ -12,5 +12,5 @@ export function macrosToCalories(macros: {
 }) {
   const { protein, carbs, fat } = macros;
 
-  return (protein * 4 + carbs * 4 + fat * 9).toFixed(0);
+  return Number((protein * 4 + carbs * 4 + fat * 9).toFixed(0));
 }

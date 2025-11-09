@@ -5,9 +5,19 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { eq } from "drizzle-orm/sql";
 import { useMemo } from "react";
 import { View } from "react-native";
+import {
+  CARBS_COLOR,
+  FAT_COLOR,
+  PROTEIN_COLOR,
+} from "../food/MacrosBreakdownChart";
 import { Text } from "../ui/text";
+import { GoalProgressBar } from "./GoalProgressBar";
 import { MealCard } from "./MealCard";
 
+const proteinGoal = 170;
+const carbsGoal = 200;
+const fatGoal = 50;
+const totalCaloriesGoal = 2200;
 const meals = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
 type Meal = (typeof meals)[number];
 
@@ -32,6 +42,10 @@ export function Diary({ day }: { day: string }) {
     );
   }, [loggedFoods]);
 
+  const totalCalories = useMemo(() => {
+    return macrosToCalories(dayMacros);
+  }, [dayMacros]);
+
   return (
     <View className="flex flex-col gap-2">
       <View className="flex flex-row gap-2">
@@ -40,11 +54,23 @@ export function Diary({ day }: { day: string }) {
           kcal
         </Text>
       </View>
-      <View className="flex flex-row gap-2">
-        <Text>Protein: {dayMacros.protein}g</Text>
-        <Text>Carbs: {dayMacros.carbs}g</Text>
-        <Text>Fat: {dayMacros.fat}g</Text>
-      </View>
+      <GoalProgressBar
+        goal={totalCaloriesGoal}
+        value={totalCalories}
+        color="#3498DB"
+        units="kcal"
+      />
+      <GoalProgressBar
+        goal={proteinGoal}
+        value={dayMacros.protein}
+        color={PROTEIN_COLOR}
+      />
+      <GoalProgressBar
+        goal={carbsGoal}
+        value={dayMacros.carbs}
+        color={CARBS_COLOR}
+      />
+      <GoalProgressBar goal={fatGoal} value={dayMacros.fat} color={FAT_COLOR} />
       {meals.map((meal) => (
         <MealCard
           key={meal}

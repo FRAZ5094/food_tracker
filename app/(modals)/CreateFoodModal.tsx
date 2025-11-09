@@ -1,8 +1,8 @@
+import { createFood } from "@/api/food/createFood";
 import { FormInput } from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { db } from "@/db";
-import { CreateFoodSchema, Food } from "@/db/schema";
+import { CreateFoodSchema } from "@/db/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -16,8 +16,7 @@ export default function CreateFoodModal() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    await db.insert(Food).values(data);
+    await createFood(data);
     router.dismissAll();
   });
 
@@ -77,7 +76,6 @@ export default function CreateFoodModal() {
             flex: 1,
           }}
           onPress={() => {
-            console.log("onSubmit");
             onSubmit();
           }}
         >
