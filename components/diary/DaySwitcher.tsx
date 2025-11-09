@@ -1,8 +1,5 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
+import Animated, { SharedValue } from "react-native-reanimated";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 
@@ -28,16 +25,16 @@ export function DaySwitcher({
 
   const isToday = day === new Date().toDateString();
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: -scrollOffset.value }],
-    };
-  });
+  // const animatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [{ translateY: -scrollOffset.value }],
+  //   };
+  // });
 
   return (
     <Animated.View
       className="flex flex-row items-center gap-1 w-full justify-between p-4"
-      style={animatedStyle}
+      // style={animatedStyle}
     >
       <Button
         variant={"outline"}

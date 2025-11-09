@@ -20,6 +20,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          headerShadowVisible: false,
           title: "Diary",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="book" size={28} color={color} />

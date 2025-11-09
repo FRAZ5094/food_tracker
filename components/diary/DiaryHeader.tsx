@@ -43,7 +43,7 @@ export function DiaryHeader({
   return (
     <Animated.View
       ref={aref}
-      className="flex flex-col gap-2 z-10 rounded-md bg-white p-4"
+      className="flex flex-col gap-2 z-10 rounded-b-md bg-white p-4 shadow-lg"
       style={stylez}
     >
       <GoalProgressBar
