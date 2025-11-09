@@ -15,24 +15,24 @@ export default function SearchFoodsPage({
   const { data: foods } = useLiveQuery(db.query.Food.findMany());
   const [search, setSearch] = useState("");
 
-  const testFoods = useMemo(
-    () =>
-      Array.from({ length: 100 }, (_, index) => ({
-        id: index,
-        name: `Food ${index + 1}`,
-        protein: Math.random() * 100,
-        carbs: Math.random() * 100,
-        fat: Math.random() * 100,
-      })),
-    []
-  );
+  // const testFoods = useMemo(
+  //   () =>
+  //     Array.from({ length: 100 }, (_, index) => ({
+  //       id: index,
+  //       name: `Food ${index + 1}`,
+  //       protein: Math.random() * 100,
+  //       carbs: Math.random() * 100,
+  //       fat: Math.random() * 100,
+  //     })),
+  //   []
+  // );
 
   const filteredFoods = useMemo(
     () =>
-      testFoods?.filter((food) =>
+      foods?.filter((food) =>
         food.name.toLowerCase().includes(search.toLowerCase())
       ),
-    [search, testFoods]
+    [search, foods]
   );
 
   const listHeader = useMemo(

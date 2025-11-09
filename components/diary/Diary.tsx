@@ -15,7 +15,8 @@ export function Diary({ day }: { day: string }) {
   const { data: loggedFoods } = useLiveQuery(
     db.query.LoggedFood.findMany({
       where: eq(LoggedFood.day, day),
-    })
+    }),
+    [day]
   );
 
   const dayMacros = useMemo(() => {
