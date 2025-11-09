@@ -53,7 +53,11 @@ export function Diary() {
 
   return (
     <View>
-      <Animated.ScrollView scrollEventThrottle={16} ref={animatedRef}>
+      <Animated.ScrollView
+        stickyHeaderIndices={[1]}
+        scrollEventThrottle={16}
+        ref={animatedRef}
+      >
         <DaySwitcher day={day} setDay={setDay} scrollOffset={scrollOffset} />
         <DiaryHeader
           totalCalories={totalCalories}

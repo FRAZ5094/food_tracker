@@ -1,8 +1,4 @@
-import Animated, {
-  SharedValue,
-  useAnimatedRef,
-  useAnimatedStyle,
-} from "react-native-reanimated";
+import Animated, { SharedValue, useAnimatedRef } from "react-native-reanimated";
 import {
   CARBS_COLOR,
   FAT_COLOR,
@@ -31,20 +27,20 @@ export function DiaryHeader({
   //     return measured?.height ?? 0;
   //   });
   const daySwitcherHeight = 72;
-  const stylez = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateY: Math.max(scrollOffset.value - daySwitcherHeight, 0),
-        },
-      ],
-    };
-  });
+  // const stylez = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       {
+  //         translateY: Math.max(scrollOffset.value - daySwitcherHeight, 0),
+  //       },
+  //     ],
+  //   };
+  // });
   return (
     <Animated.View
       ref={aref}
       className="flex flex-col gap-2 z-10 rounded-b-md bg-white p-4 shadow-lg"
-      style={stylez}
+      // style={stylez}
     >
       <GoalProgressBar
         title="Calories"
