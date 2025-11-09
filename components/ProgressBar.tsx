@@ -6,13 +6,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Text } from "./ui/text";
 
 export function ProgressBar({
   valuePercentage,
   color = "#3498DB",
-  height = 20,
-  borderRadius = 6,
+  height = 8,
+  borderRadius = 2,
 }: {
   valuePercentage: number;
   color?: string;
@@ -56,7 +55,7 @@ export function ProgressBar({
           barStyle,
         ]}
       >
-        <Text
+        {/* <Text
           style={{
             fontSize: 12,
             color: "white",
@@ -69,7 +68,7 @@ export function ProgressBar({
           }}
         >
           {valuePercentage.toFixed(0)}%
-        </Text>
+        </Text> */}
       </Animated.View>
     </View>
   );

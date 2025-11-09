@@ -3,31 +3,30 @@ import { LoggedFood } from "@/db/schema";
 import { macrosToCalories } from "@/lib/utils";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { eq } from "drizzle-orm/sql";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { View } from "react-native";
-import {
-  CARBS_COLOR,
-  FAT_COLOR,
-  PROTEIN_COLOR,
-} from "../food/MacrosBreakdownChart";
-import { Text } from "../ui/text";
-import { GoalProgressBar } from "./GoalProgressBar";
+import Animated, {
+  useAnimatedRef,
+  useAnimatedStyle,
+  useScrollOffset,
+} from "react-native-reanimated";
+import { DaySwitcher } from "./DaySwitcher";
+import { DiaryHeader } from "./DiaryHeader";
 import { MealCard } from "./MealCard";
 
-const proteinGoal = 170;
-const carbsGoal = 200;
-const fatGoal = 50;
-const totalCaloriesGoal = 2200;
 const meals = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
 type Meal = (typeof meals)[number];
 
-export function Diary({ day }: { day: string }) {
+export function Diary() {
+  const [day, setDay] = useState(new Date().toDateString());
   const { data: loggedFoods } = useLiveQuery(
     db.query.LoggedFood.findMany({
       where: eq(LoggedFood.day, day),
     }),
     [day]
   );
+  const animatedRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollOffset = useScrollOffset(animatedRef);
 
   const dayMacros = useMemo(() => {
     return loggedFoods?.reduce(
@@ -46,42 +45,40 @@ export function Diary({ day }: { day: string }) {
     return macrosToCalories(dayMacros);
   }, [dayMacros]);
 
+  const scrollViewAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: -scrollOffset.value }],
+    };
+  });
+
   return (
-    <View className="flex flex-col gap-2">
-      <View className="flex flex-row gap-2">
-        <Text>
-          Total: {macrosToCalories(dayMacros)}
-          kcal
-        </Text>
-      </View>
-      <GoalProgressBar
-        goal={totalCaloriesGoal}
-        value={totalCalories}
-        color="#3498DB"
-        units="kcal"
-      />
-      <GoalProgressBar
-        goal={proteinGoal}
-        value={dayMacros.protein}
-        color={PROTEIN_COLOR}
-      />
-      <GoalProgressBar
-        goal={carbsGoal}
-        value={dayMacros.carbs}
-        color={CARBS_COLOR}
-      />
-      <GoalProgressBar goal={fatGoal} value={dayMacros.fat} color={FAT_COLOR} />
-      {meals.map((meal) => (
-        <MealCard
-          key={meal}
-          mealName={meal}
-          day={day}
-          loggedFoods={
-            loggedFoods?.filter((loggedFood) => loggedFood.mealName === meal) ??
-            []
-          }
+    <View>
+      <Animated.ScrollView
+        // scrollEventThrottle={16}
+        ref={animatedRef}
+      >
+        <DaySwitcher day={day} setDay={setDay} scrollOffset={scrollOffset} />
+        <DiaryHeader
+          totalCalories={totalCalories}
+          dayMacros={dayMacros}
+          scrollOffset={scrollOffset}
         />
-      ))}
+        <View className="h-4 w-full" />
+        <View className="p-4">
+          {meals.map((meal) => (
+            <MealCard
+              key={meal}
+              mealName={meal}
+              day={day}
+              loggedFoods={
+                loggedFoods?.filter(
+                  (loggedFood) => loggedFood.mealName === meal
+                ) ?? []
+              }
+            />
+          ))}
+        </View>
+      </Animated.ScrollView>
     </View>
   );
 }
