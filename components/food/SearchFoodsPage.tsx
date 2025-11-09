@@ -1,4 +1,3 @@
-import { CreateFoodButton } from "@/components/food/CreateFoodButton";
 import { FoodCard } from "@/components/food/FoodCard";
 import { Input } from "@/components/ui/input";
 import { db } from "@/db";
@@ -40,7 +39,7 @@ export default function SearchFoodsPage({
           onPress={() => onFoodSelected?.(food.id)}
         />
       ))}
-      <CreateFoodButton />
+      {/* <CreateFoodButton /> */}
     </View>
   );
 }

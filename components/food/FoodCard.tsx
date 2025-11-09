@@ -19,7 +19,7 @@ export function FoodCard({
   const calories = macrosToCalories(food);
   return (
     <Pressable
-      className="flex flex-row p-2 border border-gray-200 rounded-md"
+      className="flex flex-row p-4 border border-gray-200 rounded-md bg-white"
       onPress={onPress}
     >
       <View className="flex-1">

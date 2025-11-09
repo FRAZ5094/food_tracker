@@ -22,17 +22,9 @@ export type AddLoggedFoodModalParams = {
 const LoggedFoodFormSchema = z.object({
   servingSizeValue: z.preprocess(
     (val) => {
-      // This handles all cases:
-      // - `val` is "1.5" -> `Number("1.5")` -> 1.5
-      // - `val` is "1."  -> `Number("1.")`  -> 1
-      // - `val` is "."   -> `Number(".")`   -> NaN (will fail validation)
-      // - `val` is ""    -> undefined
-      // - `val` is undefined -> undefined
-      // - `val` is 10 (from setValue/reset) -> 10
       if (typeof val === "number") return val;
       return val === "" || val === undefined ? undefined : Number(val);
     },
-    // Add custom error messages for better UX
     z
       .number({
         error: "Must be a valid number",
@@ -71,7 +63,7 @@ export default function AddLoggedFoodModal() {
   });
 
   const onSubmit = handleSubmit(async (formData) => {
-    if (!selectedFoodName || !servingUnit) {
+    if (!selectedFoodName || !servingUnit || !params.mealName) {
       return;
     }
     const proportionOfServing =
@@ -100,14 +92,6 @@ export default function AddLoggedFoodModal() {
         marginTop: safeAreaInsets.top + 32,
       }}
     >
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "500",
-        }}
-      >
-        Log food
-      </Text>
       <Link
         className="flex border border-gray-200 rounded-md p-2 text-center"
         href={{ pathname: `/(modals)/SelectFoodModal`, params }}

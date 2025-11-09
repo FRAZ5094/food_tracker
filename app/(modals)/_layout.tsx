@@ -17,6 +17,14 @@ export default function ModalsLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="ScanFoodModal"
+        options={{
+          presentation: "modal",
+          headerShown: true,
+          title: "Scan barcode",
+        }}
+      />
     </Stack>
   );
 }

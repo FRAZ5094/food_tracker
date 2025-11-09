@@ -14,7 +14,7 @@ export function AddLoggedFoodButton({
   return (
     <Link
       className="flex-col items-center justify-center"
-      href={`/(modals)/AddLoggedFoodModal?${searchParams.toString()}`}
+      href={`/(modals)/ScanFoodModal?${searchParams.toString()}`}
     >
       <MaterialCommunityIcons name="plus" size={24} color="black" />
     </Link>
