@@ -4,8 +4,8 @@
 node_modules/
 
 # Builds
-*/**.apk
-*/**.aab
+**/*.apk
+**/*.aab
 
 # Expo
 .expo/

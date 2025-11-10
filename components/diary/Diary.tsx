@@ -12,10 +12,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { DaySwitcher } from "./DaySwitcher";
 import { DiaryHeader } from "./DiaryHeader";
-import { MealCard } from "./MealCard";
+import { GroupCard } from "./MealCard";
 
-const meals = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
-type Meal = (typeof meals)[number];
+const groups = ["Breakfast", "Lunch", "Dinner", "Snacks"] as const;
+type Groups = (typeof groups)[number];
 
 export function Diary() {
   const [day, setDay] = useState(new Date().toDateString());
@@ -66,14 +66,14 @@ export function Diary() {
         />
         <View className="h-4 w-full" />
         <View className="p-4">
-          {meals.map((meal) => (
-            <MealCard
-              key={meal}
-              mealName={meal}
+          {groups.map((group) => (
+            <GroupCard
+              key={group}
+              groupName={group}
               day={day}
               loggedFoods={
                 loggedFoods?.filter(
-                  (loggedFood) => loggedFood.mealName === meal
+                  (loggedFood) => loggedFood.groupName === group
                 ) ?? []
               }
             />

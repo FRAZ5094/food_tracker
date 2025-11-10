@@ -1,8 +1,9 @@
+import { createLoggedFood } from "@/api/loggedFood/createLoggedFood";
 import { FormInput } from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { db } from "@/db";
-import { Food, LoggedFood } from "@/db/schema";
+import { Food } from "@/db/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
@@ -14,7 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import z from "zod/v4";
 
 export type AddLoggedFoodModalParams = {
-  mealName: string;
+  groupName: string;
   day: string;
   foodId?: string;
 };
@@ -63,7 +64,7 @@ export default function AddLoggedFoodModal() {
   });
 
   const onSubmit = handleSubmit(async (formData) => {
-    if (!selectedFoodName || !servingUnit || !params.mealName) {
+    if (!selectedFoodName || !servingUnit || !params.groupName) {
       return;
     }
     const proportionOfServing =
@@ -72,14 +73,14 @@ export default function AddLoggedFoodModal() {
     const carbs = data.carbs * proportionOfServing;
     const fat = data.fat * proportionOfServing;
 
-    await db.insert(LoggedFood).values({
+    await createLoggedFood({
       name: selectedFoodName,
       protein: protein,
       carbs: carbs,
       fat: fat,
       servingSizeValue: formData.servingSizeValue,
       servingSizeUnit: servingUnit,
-      mealName: params.mealName,
+      groupName: params.groupName,
       day: params.day,
     });
     router.back();

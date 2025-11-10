@@ -4,12 +4,12 @@ import { Link } from "expo-router";
 
 export function AddLoggedFoodButton({
   day,
-  mealName,
+  groupName,
 }: {
   day: string;
-  mealName: string;
+  groupName: string;
 }) {
-  const params: AddLoggedFoodModalParams = { day, mealName };
+  const params: AddLoggedFoodModalParams = { day, groupName };
   const searchParams = new URLSearchParams(params);
   return (
     <Link

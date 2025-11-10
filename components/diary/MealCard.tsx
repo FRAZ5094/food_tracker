@@ -13,20 +13,20 @@ type LoggedFood = {
   servingSizeValue: number;
   servingSizeUnit: string;
 };
-export function MealCard({
-  mealName,
+export function GroupCard({
+  groupName,
   loggedFoods,
   day,
 }: {
-  mealName: string;
+  groupName: string;
   loggedFoods: LoggedFood[];
   day: string;
 }) {
   return (
     <View className="flex flex-col border border-gray-200 rounded-md bg-white">
       <View className="flex flex-row justify-between px-2 py-1">
-        <Text className="text-lg font-medium">{mealName}</Text>
-        <AddLoggedFoodButton day={day} mealName={mealName} />
+        <Text className="text-lg font-medium">{groupName}</Text>
+        <AddLoggedFoodButton day={day} groupName={groupName} />
       </View>
       {loggedFoods.length > 0 && (
         <>

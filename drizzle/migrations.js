@@ -5,6 +5,7 @@ import m0000 from './0000_nosy_penance.sql';
 import m0001 from './0001_useful_stark_industries.sql';
 import m0002 from './0002_pale_random.sql';
 import m0003 from './0003_bent_reptil.sql';
+import m0004 from './0004_gifted_gladiator.sql';
 
   export default {
     journal,
@@ -12,7 +13,8 @@ import m0003 from './0003_bent_reptil.sql';
       m0000,
 m0001,
 m0002,
-m0003
+m0003,
+m0004
     }
   }
   
