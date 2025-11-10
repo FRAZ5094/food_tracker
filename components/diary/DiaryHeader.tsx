@@ -1,4 +1,4 @@
-import Animated, { SharedValue, useAnimatedRef } from "react-native-reanimated";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import {
   CARBS_COLOR,
   FAT_COLOR,
@@ -14,28 +14,11 @@ const totalCaloriesGoal = 2200;
 export function DiaryHeader({
   totalCalories,
   dayMacros,
-  scrollOffset,
 }: {
   totalCalories: number;
   dayMacros: { protein: number; carbs: number; fat: number };
-  scrollOffset: SharedValue<number>;
 }) {
   const aref = useAnimatedRef();
-
-  //   const headerHeight = useDerivedValue(() => {
-  //     const measured = measure(aref);
-  //     return measured?.height ?? 0;
-  //   });
-  const daySwitcherHeight = 72;
-  // const stylez = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [
-  //       {
-  //         translateY: Math.max(scrollOffset.value - daySwitcherHeight, 0),
-  //       },
-  //     ],
-  //   };
-  // });
   return (
     <Animated.View
       ref={aref}

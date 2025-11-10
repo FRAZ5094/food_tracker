@@ -1,5 +1,5 @@
 import { macrosToCalories } from "@/lib/utils";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { AddLoggedFoodButton } from "../loggedFood/AddLoggedFoodButton";
 import { DeleteLoggedFoodButton } from "../loggedFood/DeleteLoggedFoodButton";
 import { Text } from "../ui/text";
@@ -25,17 +25,11 @@ export function GroupCard({
   return (
     <View className="flex flex-col border border-gray-200 rounded-md bg-white">
       <View className="flex flex-row justify-between px-2 py-1">
-        <Text className="text-lg font-medium">{groupName}</Text>
+        <Text className="text-lg font-bold">{groupName}</Text>
         <AddLoggedFoodButton day={day} groupName={groupName} />
       </View>
       {loggedFoods.length > 0 && (
         <>
-          <View
-            style={{
-              borderBottomColor: "gray",
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
           <View className="flex flex-col gap-2 p-2">
             {loggedFoods.map((loggedFood) => (
               <View

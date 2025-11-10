@@ -1,27 +1,25 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import Animated, { SharedValue } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 
 export function DaySwitcher({
   day,
-  setDay,
-  scrollOffset,
+  onDayChange,
 }: {
   day: string;
-  setDay: React.Dispatch<React.SetStateAction<string>>;
-  scrollOffset: SharedValue<number>;
+  onDayChange: (day: string) => void;
 }) {
-  const handleDayChange = (direction: "previous" | "next") =>
-    setDay((day) => {
-      const newDay = new Date(day);
-      if (direction === "previous") {
-        newDay.setDate(newDay.getDate() - 1);
-      } else {
-        newDay.setDate(newDay.getDate() + 1);
-      }
-      return newDay.toDateString();
-    });
+  const handleDayChange = (direction: "previous" | "next") => {
+    const newDay = new Date(day);
+    console.log("newDay", newDay);
+    if (direction === "previous") {
+      newDay.setDate(newDay.getDate() - 1);
+    } else {
+      newDay.setDate(newDay.getDate() + 1);
+    }
+    onDayChange(newDay.toDateString());
+  };
 
   const isToday = day === new Date().toDateString();
 

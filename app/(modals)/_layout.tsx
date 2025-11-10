@@ -18,6 +18,14 @@ export default function ModalsLayout() {
         }}
       />
       <Stack.Screen
+        name="SelectFoodModal"
+        options={{
+          presentation: "formSheet",
+          headerShown: true,
+          title: "Select food",
+        }}
+      />
+      <Stack.Screen
         name="ScanFoodModal"
         options={{
           presentation: "modal",
